@@ -45,8 +45,9 @@ public class Main {
         JTextArea r3 = new JTextArea("Right 3");
         Set<JTextArea> statAreaList = Set.of(r1, r2, r3);
         statAreaList.forEach(statArea -> {
-            statArea.setText("none");
+            statArea.setText(" 0");
             statArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            statArea.setBackground(Color.LIGHT_GRAY);
             rightPanel.add(statArea);
         });
 
