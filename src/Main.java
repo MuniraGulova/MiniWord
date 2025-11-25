@@ -1,11 +1,20 @@
+import actionListeners.ReadFileActionListener;
+import components.StatTextArea;
+import documentListeners.LetterCountListener;
+import documentListeners.SentencesCountListener;
+import documentListeners.SymbolsCountListener;
+import mouseListeners.MouseTipTextListener;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
-import java.util.Set;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.List;
 
 
 public class Main {
-    void saveFile(JTextArea textArea, JFileChooser fileChooser, JFrame jForm) {
+    public static void saveFile(JTextArea textArea, JFileChooser fileChooser, JFrame jForm) {
         int result = fileChooser.showSaveDialog(jForm);
         if (result == JFileChooser.APPROVE_OPTION) {
             try {
@@ -23,7 +32,6 @@ public class Main {
 
 
     public static void main(String[] arga) {
-        Main program = new Main();
         final JFrame jForm = new JFrame("Текстовый редактор");
         jForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -34,43 +42,32 @@ public class Main {
 
         JFileChooser fileChooser = new JFileChooser();
 
-        JTextArea textArea = new JTextArea();
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new GridLayout(1, 3));
+
+        JTextArea textArea = new JTextArea("введите текст");
         textArea.setEnabled(false);
 
-        JPanel rightPanel = new JPanel();
-        rightPanel.setLayout(new GridLayout(1, 3)); // например, 3 вертикально
+        StatTextArea symbolsCount = new StatTextArea("0", "кол-во символов");
+        StatTextArea wordsCount = new StatTextArea("0", "кол-во слов");
+        StatTextArea sentencesCount = new StatTextArea("0", "кол-во предложений");
+        StatTextArea r4 = new StatTextArea("r4", "что-то ещё");
+        List<StatTextArea> statAreaList = List.of(symbolsCount, wordsCount, sentencesCount, r4);
 
-        JTextArea r1 = new JTextArea("Right 1");
-        JTextArea r2 = new JTextArea("Right 2");
-        JTextArea r3 = new JTextArea("Right 3");
-        Set<JTextArea> statAreaList = Set.of(r1, r2, r3);
-        statAreaList.forEach(statArea -> {
-            statArea.setText(" 0");
+        for (StatTextArea statArea : statAreaList) {
+            statArea.setEditable(false);
             statArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             statArea.setBackground(Color.LIGHT_GRAY);
+            statArea.addMouseListener(new MouseTipTextListener(statArea));
             rightPanel.add(statArea);
-        });
-
-        JSplitPane split = new JSplitPane(
-                JSplitPane.VERTICAL_SPLIT,
-                new JScrollPane(textArea),
-                rightPanel
-        );
+        }
+        textArea.getDocument().addDocumentListener(new SymbolsCountListener(textArea, symbolsCount));
+        textArea.getDocument().addDocumentListener(new LetterCountListener(textArea, wordsCount));
+        textArea.getDocument().addDocumentListener(new SentencesCountListener(textArea, sentencesCount));
+        //todo
+        JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(textArea), rightPanel);
         split.setResizeWeight(0.985);
         jForm.add(split);
-
-/*        JTextArea textArea = new JTextArea();
-        textArea.setBounds(dms.width / 2 - w / 2, dms.height / 2 - h / 2, w, h-20);
-        textArea.setEnabled(false);
-        jForm.add(new JScrollPane(textArea));
-
-        JTextArea statArea = new JTextArea();
-        statArea.setEnabled(true);
-        statArea.setText("alisher top");
-        statArea.setOpaque(true);
-        statArea.setBackground(Color.YELLOW);
-        jForm.add(statArea);*/
-
 
         JMenuBar menuBar = new JMenuBar();//menu panel
         JMenu menuFile = new JMenu("Файл");//выпадающее меню
@@ -92,10 +89,6 @@ public class Main {
         menuFile.add(saveFile);
         menuFile.add(closeFile);
         menuBar.add(menuFile);
-//        menuBar.add(openFile);
-//        menuBar.add(saveFile);
-//        menuBar.add(newFile);
-//        menuBar.add(closeFile);
         menuFront.add(Bold);
         menuFront.add(Italic);
         menuFront.add(Strikethrough);
@@ -110,33 +103,13 @@ public class Main {
         toolBar.setFloatable(false);
         jForm.add(toolBar, BorderLayout.NORTH);
         jForm.setVisible(true);
+
         newFile.addActionListener(e -> {
             textArea.setEnabled(true);
             jForm.setTitle("Текстовый редактор - Создание нового файла");
         });
-        openFile.addActionListener(e -> {
-            int result = fileChooser.showOpenDialog(jForm);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                try {
-                    File file = fileChooser.getSelectedFile();
-                    FileReader fr = new FileReader(file);
-                    BufferedReader br = new BufferedReader(fr);
-
-                    textArea.setText("");
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        textArea.append(line + '\n');
-                    }
-                    br.close();
-                    textArea.setEnabled(true);
-                    jForm.setTitle("Текстовый редактор - " + file.getName());
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(jForm, "Ошибка при открытии файла");
-                }
-            }
-        });
-        saveFile.addActionListener(e -> program.saveFile(textArea, fileChooser, jForm));
+        openFile.addActionListener(new ReadFileActionListener(fileChooser, jForm, textArea));
+        saveFile.addActionListener(e -> saveFile(textArea, fileChooser, jForm));
         closeFile.addActionListener(e -> {
             if (!textArea.isEnabled()) {
                 JOptionPane.showMessageDialog(jForm, "Нечего закрывать");
@@ -148,7 +121,7 @@ public class Main {
             }
             int res = JOptionPane.showConfirmDialog(jForm, "Сохранить ли перед закрытием изменения?");
             if (res == JOptionPane.YES_OPTION) {
-                program.saveFile(textArea, fileChooser, jForm);
+                saveFile(textArea, fileChooser, jForm);
             }
             textArea.setEnabled(false);
             textArea.setText("");
