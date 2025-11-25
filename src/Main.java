@@ -1,11 +1,7 @@
-import actionListeners.PrintToConsoleActionListener;
-import actionListeners.PrintToTextAreaListener;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
 import javax.swing.*;
+import java.awt.*;
+import java.io.*;
+import java.util.Set;
 
 
 public class Main {
@@ -37,13 +33,44 @@ public class Main {
         jForm.setBounds(dms.width / 2 - w / 2, dms.height / 2 - h / 2, w, h);
 
         JFileChooser fileChooser = new JFileChooser();
+
         JTextArea textArea = new JTextArea();
-        JTextArea countArea = new JTextArea();
+        textArea.setEnabled(false);
+
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new GridLayout(1, 3)); // например, 3 вертикально
+
+        JTextArea r1 = new JTextArea("Right 1");
+        JTextArea r2 = new JTextArea("Right 2");
+        JTextArea r3 = new JTextArea("Right 3");
+        Set<JTextArea> statAreaList = Set.of(r1, r2, r3);
+        statAreaList.forEach(statArea -> {
+            statArea.setText("none");
+            statArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            rightPanel.add(statArea);
+        });
+
+        JSplitPane split = new JSplitPane(
+                JSplitPane.VERTICAL_SPLIT,
+                new JScrollPane(textArea),
+                rightPanel
+        );
+        split.setResizeWeight(0.985);
+        jForm.add(split);
+
+/*        JTextArea textArea = new JTextArea();
         textArea.setBounds(dms.width / 2 - w / 2, dms.height / 2 - h / 2, w, h-20);
-        countArea.setBounds(dms.width / 2 - w / 2 , dms.height - h , w, 20);
-        countArea.setText("alisher top");
-        textArea.setEnabled(false);//deactive textarea
+        textArea.setEnabled(false);
         jForm.add(new JScrollPane(textArea));
+
+        JTextArea statArea = new JTextArea();
+        statArea.setEnabled(true);
+        statArea.setText("alisher top");
+        statArea.setOpaque(true);
+        statArea.setBackground(Color.YELLOW);
+        jForm.add(statArea);*/
+
+
         JMenuBar menuBar = new JMenuBar();//menu panel
         JMenu menuFile = new JMenu("Файл");//выпадающее меню
         JMenuItem openFile = new JMenuItem("Открыть");//пунты в меню
@@ -81,14 +108,11 @@ public class Main {
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
         jForm.add(toolBar, BorderLayout.NORTH);
-
         jForm.setVisible(true);
         newFile.addActionListener(e -> {
             textArea.setEnabled(true);
-            textArea.setText(e.getActionCommand() + " test");
             jForm.setTitle("Текстовый редактор - Создание нового файла");
         });
-        openFile.addActionListener(new PrintToTextAreaListener(textArea, "openFile pressed"));
         openFile.addActionListener(e -> {
             int result = fileChooser.showOpenDialog(jForm);
             if (result == JFileChooser.APPROVE_OPTION) {
@@ -113,20 +137,20 @@ public class Main {
         });
         saveFile.addActionListener(e -> program.saveFile(textArea, fileChooser, jForm));
         closeFile.addActionListener(e -> {
-           if(!textArea.isEnabled()){
-               JOptionPane.showMessageDialog(jForm, "Нечего закрывать");
-               return;
-           }
-           if(textArea.getText().equals("")){
-               textArea.setEnabled(false);
-               return;
-           }
-           int res = JOptionPane.showConfirmDialog(jForm, "Сохранить ли перед закрытием изменения?");
-           if(res == JOptionPane.YES_OPTION){
-               program.saveFile(textArea, fileChooser, jForm);
-           }
-           textArea.setEnabled(false);
-           textArea.setText("");
+            if (!textArea.isEnabled()) {
+                JOptionPane.showMessageDialog(jForm, "Нечего закрывать");
+                return;
+            }
+            if (textArea.getText().equals("")) {
+                textArea.setEnabled(false);
+                return;
+            }
+            int res = JOptionPane.showConfirmDialog(jForm, "Сохранить ли перед закрытием изменения?");
+            if (res == JOptionPane.YES_OPTION) {
+                program.saveFile(textArea, fileChooser, jForm);
+            }
+            textArea.setEnabled(false);
+            textArea.setText("");
         });
 
     }
