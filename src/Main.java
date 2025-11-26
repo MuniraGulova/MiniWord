@@ -3,6 +3,7 @@ import components.StatTextArea;
 import documentListeners.LetterCountListener;
 import documentListeners.SentencesCountListener;
 import documentListeners.SymbolsCountListener;
+import documentListeners.SymbolsWithoutCountListener;
 import mouseListeners.MouseTipTextListener;
 
 import javax.swing.*;
@@ -31,7 +32,7 @@ public class Main {
     }
 
 
-    public static void main(String[] arga) {
+    public static void main(String[] args) {
         final JFrame jForm = new JFrame("Текстовый редактор");
         jForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -51,8 +52,8 @@ public class Main {
         StatTextArea symbolsCount = new StatTextArea("0", "кол-во символов");
         StatTextArea wordsCount = new StatTextArea("0", "кол-во слов");
         StatTextArea sentencesCount = new StatTextArea("0", "кол-во предложений");
-        StatTextArea r4 = new StatTextArea("r4", "что-то ещё");
-        List<StatTextArea> statAreaList = List.of(symbolsCount, wordsCount, sentencesCount, r4);
+        StatTextArea symbolswithoutspaceCount = new StatTextArea("0", "кол-во символов без пробела");
+        List<StatTextArea> statAreaList = List.of(symbolsCount, wordsCount, sentencesCount, symbolswithoutspaceCount);
 
         for (StatTextArea statArea : statAreaList) {
             statArea.setEditable(false);
@@ -64,6 +65,7 @@ public class Main {
         textArea.getDocument().addDocumentListener(new SymbolsCountListener(textArea, symbolsCount));
         textArea.getDocument().addDocumentListener(new LetterCountListener(textArea, wordsCount));
         textArea.getDocument().addDocumentListener(new SentencesCountListener(textArea, sentencesCount));
+        textArea.getDocument().addDocumentListener(new SymbolsWithoutCountListener(textArea, sentencesCount));
         //todo
         JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(textArea), rightPanel);
         split.setResizeWeight(0.985);
@@ -106,6 +108,7 @@ public class Main {
 
         newFile.addActionListener(e -> {
             textArea.setEnabled(true);
+            textArea.setText("");
             jForm.setTitle("Текстовый редактор - Создание нового файла");
         });
         openFile.addActionListener(new ReadFileActionListener(fileChooser, jForm, textArea));

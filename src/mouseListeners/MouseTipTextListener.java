@@ -11,7 +11,7 @@ public class MouseTipTextListener extends MouseAdapter {
     public MouseTipTextListener(StatTextArea statArea) {
         this.statArea = statArea;
     }
-
+//todo
     @Override
     public void mouseEntered(MouseEvent e) {
         statArea.setToolTipText(statArea.getDescription());

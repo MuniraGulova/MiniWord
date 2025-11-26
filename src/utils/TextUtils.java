@@ -44,4 +44,9 @@ public class TextUtils {
         return count;
     }
 
+    public static int countCharsWithoutSpace(String text) {
+        if (text == null) return 0;
+        return text.trim().length();
+    }
+
 }
