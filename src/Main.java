@@ -51,12 +51,12 @@ public class Main {
         StatTextArea sentencesCount = new StatTextArea("0", "кол-во предложений");
         StatTextArea symbolswithoutspaceCount = new StatTextArea("0", "кол-во символов без пробела");
         StatTextArea numberCount = new StatTextArea("0", "кол-во цифр");
-        StatTextArea znakprepCount = new StatTextArea("0", "кол-во спец символов");
-        StatTextArea znakPrepCount = new StatTextArea("0", "кол-во абзацев");
-        StatTextArea znakCount = new StatTextArea("0", "кол-во знаков препинания");
+        StatTextArea znakCount = new StatTextArea("0", "кол-во спец символов");
+        StatTextArea znakabzCount = new StatTextArea("0", "кол-во абзацев");
+        StatTextArea znakprepCount = new StatTextArea("0", "кол-во знаков препинания");
         StatTextArea latinCount = new StatTextArea("0", "кол-во латин. букв");
         StatTextArea ruCount = new StatTextArea("0", "кол-во русских букв");
-        List<StatTextArea> statAreaList = List.of(symbolsCount, wordsCount, sentencesCount, symbolswithoutspaceCount, numberCount, znakCount, znakCount, latinCount, ruCount);
+        List<StatTextArea> statAreaList = List.of(symbolsCount, wordsCount, sentencesCount, symbolswithoutspaceCount, numberCount, znakCount, znakprepCount, latinCount, ruCount);
 
         for (StatTextArea statArea : statAreaList) {
             statArea.setEditable(false);
@@ -137,6 +137,5 @@ public class Main {
             textArea.setEnabled(false);
             textArea.setText("");
         });
-
     }
 }
