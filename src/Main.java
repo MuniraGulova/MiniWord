@@ -140,6 +140,7 @@ public class Main {
         menuRedactor.add(menuFront);
         menuRedactor.add(Size);
         menuRedactor.add(Font);
+        menuRedactor.add(Color);
 
         menuBar.add(menuRedactor);
         menuBar.add(menuEdit);
