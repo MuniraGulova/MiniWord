@@ -21,15 +21,6 @@ public class TextUtils {
         return words.length;
     }
 
-    // Подсчёт строк
-    public static int countLines(String text) {
-        if (text == null || text.isEmpty()) return 0;
-
-        // Делим по переносам строк
-        String[] lines = text.split("\\R");
-        return lines.length;
-    }
-
     public static int countSentences(String text) {
         if (text == null || text.isBlank()) return 0;
 
@@ -46,7 +37,64 @@ public class TextUtils {
 
     public static int countCharsWithoutSpace(String text) {
         if (text == null) return 0;
-        return text.trim().length();
+        return text.replaceAll("\\s+", "").length();
+    }
+
+    public static int NumberCount(String text) {
+        int count = 0;
+        for (int i : text.toCharArray()) {
+            if (Character.isDigit(i)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int ZnakPrepCount(String text) {
+        if (text == null) return 0;
+        int count = 0;
+        String punc = ".,!?:;—()-\"«»";
+
+        for (char c : text.toCharArray()) {
+            if (punc.indexOf(c) != -1) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int ZnakCount(String text) {
+        if (text == null) return 0;
+        int count = 0;
+        String special = "@#$%^~+=*<>";
+        for (char c : text.toCharArray()) {
+            if (special.indexOf(c) != -1) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int LatinCount(String text){
+        if(text==null) return 0;
+        int count = 0;
+        for(char c : text.toCharArray()){
+            if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int RuCount(String text) {
+        if (text == null) return 0;
+        int count = 0;
+        for (char c : text.toCharArray()) {
+            if ((c >= 'а' && c <= 'я') || (c >= 'А' && c <= 'Я') || c == 'Ё' || c == 'ё') {
+                count++;
+            }
+        }
+        return count;
     }
 
 }

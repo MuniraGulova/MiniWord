@@ -1,9 +1,6 @@
 import actionListeners.ReadFileActionListener;
 import components.StatTextArea;
-import documentListeners.LetterCountListener;
-import documentListeners.SentencesCountListener;
-import documentListeners.SymbolsCountListener;
-import documentListeners.SymbolsWithoutCountListener;
+import documentListeners.*;
 import mouseListeners.MouseTipTextListener;
 
 import javax.swing.*;
@@ -53,7 +50,13 @@ public class Main {
         StatTextArea wordsCount = new StatTextArea("0", "кол-во слов");
         StatTextArea sentencesCount = new StatTextArea("0", "кол-во предложений");
         StatTextArea symbolswithoutspaceCount = new StatTextArea("0", "кол-во символов без пробела");
-        List<StatTextArea> statAreaList = List.of(symbolsCount, wordsCount, sentencesCount, symbolswithoutspaceCount);
+        StatTextArea numberCount = new StatTextArea("0", "кол-во цифр");
+        StatTextArea znakprepCount = new StatTextArea("0", "кол-во спец символов");
+        StatTextArea znakPrepCount = new StatTextArea("0", "кол-во абзацев");
+        StatTextArea znakCount = new StatTextArea("0", "кол-во знаков препинания");
+        StatTextArea latinCount = new StatTextArea("0", "кол-во латин. букв");
+        StatTextArea ruCount = new StatTextArea("0", "кол-во русских букв");
+        List<StatTextArea> statAreaList = List.of(symbolsCount, wordsCount, sentencesCount, symbolswithoutspaceCount, numberCount, znakCount, znakCount, latinCount, ruCount);
 
         for (StatTextArea statArea : statAreaList) {
             statArea.setEditable(false);
@@ -65,7 +68,12 @@ public class Main {
         textArea.getDocument().addDocumentListener(new SymbolsCountListener(textArea, symbolsCount));
         textArea.getDocument().addDocumentListener(new LetterCountListener(textArea, wordsCount));
         textArea.getDocument().addDocumentListener(new SentencesCountListener(textArea, sentencesCount));
-        textArea.getDocument().addDocumentListener(new SymbolsWithoutCountListener(textArea, sentencesCount));
+        textArea.getDocument().addDocumentListener(new SymbolsWithoutCountListener(textArea, symbolswithoutspaceCount));
+        textArea.getDocument().addDocumentListener(new NumbersCountListener(textArea, numberCount));
+        textArea.getDocument().addDocumentListener(new ZnakPrepCountListener(textArea, znakprepCount));
+        textArea.getDocument().addDocumentListener(new ZnakCountListener(textArea, znakCount));
+        textArea.getDocument().addDocumentListener(new LatinCountListener(textArea, latinCount));
+        textArea.getDocument().addDocumentListener(new RuCountListener(textArea, ruCount));
         //todo
         JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(textArea), rightPanel);
         split.setResizeWeight(0.985);
