@@ -8,9 +8,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class NumbersCountListener implements DocumentListener {
-    private final JTextArea sourceTxtArea;
-    private final JTextArea outputTxtArea ;
-    public NumbersCountListener(JTextArea textArea, StatTextArea numberCount) {
+    private final JTextPane sourceTxtArea;
+    private final JTextPane outputTxtArea ;
+    public NumbersCountListener(JTextPane textArea, StatTextArea numberCount) {
         this.sourceTxtArea = textArea;
         this.outputTxtArea = numberCount;
     }

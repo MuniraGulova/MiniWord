@@ -97,4 +97,15 @@ public class TextUtils {
         return count;
     }
 
+    public static int AbzCount(String text){
+        if(text==null) return 0;
+        int count = 0;
+        for (String c : text.split("\\R")){
+            if(!c.trim().isEmpty()){
+                count++;
+            }
+        }
+        return count;
+    }
+
 }

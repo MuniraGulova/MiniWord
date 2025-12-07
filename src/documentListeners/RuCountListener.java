@@ -9,10 +9,10 @@ import javax.swing.event.DocumentListener;
 import java.time.temporal.Temporal;
 
 public class RuCountListener implements DocumentListener {
-    private final JTextArea sourceTxtArea;
-    private final JTextArea outputTxtArea;
+    private final JTextPane sourceTxtArea;
+    private final JTextPane outputTxtArea;
 
-    public RuCountListener(JTextArea sourceTxtArea, StatTextArea outputTxtArea) {
+    public RuCountListener(JTextPane sourceTxtArea, StatTextArea outputTxtArea) {
         this.outputTxtArea = outputTxtArea;
         this.sourceTxtArea = sourceTxtArea;
     }

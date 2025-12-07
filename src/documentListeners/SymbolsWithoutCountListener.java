@@ -7,10 +7,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class SymbolsWithoutCountListener implements DocumentListener {
-    private final JTextArea sourceTxtArea;
-    private final JTextArea outputTxtArea;
+    private final JTextPane sourceTxtArea;
+    private final JTextPane outputTxtArea;
 
-    public SymbolsWithoutCountListener(JTextArea sourceTxtArea, JTextArea outputTxtArea) {
+    public SymbolsWithoutCountListener(JTextPane sourceTxtArea, JTextPane outputTxtArea) {
         this.sourceTxtArea = sourceTxtArea;
         this.outputTxtArea = outputTxtArea;
     }

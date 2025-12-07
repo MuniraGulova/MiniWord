@@ -1,18 +1,22 @@
+import ParameterListeners.ParameterListeners;
 import actionListeners.ReadFileActionListener;
 import components.StatTextArea;
 import documentListeners.*;
 import mouseListeners.MouseTipTextListener;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
+import java.util.jar.Attributes;
 
 
 public class Main {
-    public static void saveFile(JTextArea textArea, JFileChooser fileChooser, JFrame jForm) {
+    public static void saveFile(JTextPane textArea, JFileChooser fileChooser, JFrame jForm) {
         int result = fileChooser.showSaveDialog(jForm);
         if (result == JFileChooser.APPROVE_OPTION) {
             try {
@@ -28,7 +32,6 @@ public class Main {
         }
     }
 
-
     public static void main(String[] args) {
         final JFrame jForm = new JFrame("Текстовый редактор");
         jForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,7 +46,8 @@ public class Main {
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new GridLayout(1, 3));
 
-        JTextArea textArea = new JTextArea("введите текст");
+        JTextPane textArea = new JTextPane();
+        textArea.setText("введите текст");
         textArea.setEnabled(false);
 
         StatTextArea symbolsCount = new StatTextArea("0", "кол-во символов");
@@ -56,7 +60,7 @@ public class Main {
         StatTextArea znakprepCount = new StatTextArea("0", "кол-во знаков препинания");
         StatTextArea latinCount = new StatTextArea("0", "кол-во латин. букв");
         StatTextArea ruCount = new StatTextArea("0", "кол-во русских букв");
-        List<StatTextArea> statAreaList = List.of(symbolsCount, wordsCount, sentencesCount, symbolswithoutspaceCount, numberCount, znakCount, znakprepCount, latinCount, ruCount);
+        List<StatTextArea> statAreaList = List.of(symbolsCount, wordsCount, sentencesCount, symbolswithoutspaceCount, numberCount, znakCount, znakprepCount, latinCount, ruCount, znakabzCount);
 
         for (StatTextArea statArea : statAreaList) {
             statArea.setEditable(false);
@@ -74,6 +78,7 @@ public class Main {
         textArea.getDocument().addDocumentListener(new ZnakCountListener(textArea, znakCount));
         textArea.getDocument().addDocumentListener(new LatinCountListener(textArea, latinCount));
         textArea.getDocument().addDocumentListener(new RuCountListener(textArea, ruCount));
+        textArea.getDocument().addDocumentListener(new AbzCountListener(textArea, znakabzCount));
         //todo
         JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(textArea), rightPanel);
         split.setResizeWeight(0.985);
@@ -93,6 +98,8 @@ public class Main {
         JMenuItem Strikethrough = new JMenuItem("Подчеркивание");
         JMenuItem Size = new JMenuItem("Размер");
         JMenuItem Front = new JMenuItem("Тип шрифта");
+
+        Bold.addActionListener(new ParameterListeners(textArea));
 
         menuFile.add(openFile);
         menuFile.add(newFile);

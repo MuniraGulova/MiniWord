@@ -8,10 +8,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class LatinCountListener implements DocumentListener {
-    private final JTextArea sourceTxtArea;
-    private final JTextArea outputTxtArea;
+    private final JTextPane sourceTxtArea;
+    private final JTextPane outputTxtArea;
 
-    public LatinCountListener(JTextArea sourceTxtArea, StatTextArea outputTxtArea) {
+    public LatinCountListener(JTextPane sourceTxtArea, StatTextArea outputTxtArea) {
         this.sourceTxtArea = sourceTxtArea;
         this.outputTxtArea = outputTxtArea;
     }

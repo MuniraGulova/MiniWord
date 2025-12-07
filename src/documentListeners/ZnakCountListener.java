@@ -8,9 +8,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class ZnakCountListener implements DocumentListener {
-    private final JTextArea sourceTxtArea;
-    private final JTextArea outputTxtArea;
-    public ZnakCountListener(JTextArea sourceTxtArea, JTextArea outputTxtArea) {
+    private final JTextPane sourceTxtArea;
+    private final JTextPane outputTxtArea;
+    public ZnakCountListener(JTextPane sourceTxtArea, JTextPane outputTxtArea) {
         this.sourceTxtArea = sourceTxtArea;
         this.outputTxtArea = outputTxtArea;
     }

@@ -10,9 +10,9 @@ import java.io.FileReader;
 public class ReadFileActionListener implements ActionListener {
     private final JFileChooser fileChooser;
     private final JFrame jForm;
-    private final JTextArea textArea;
+    private final JTextPane textArea;
 
-    public ReadFileActionListener(JFileChooser fileChooser, JFrame jForm, JTextArea textArea) {
+    public ReadFileActionListener(JFileChooser fileChooser, JFrame jForm, JTextPane textArea) {
         this.fileChooser = fileChooser;
         this.jForm = jForm;
         this.textArea = textArea;
@@ -27,10 +27,12 @@ public class ReadFileActionListener implements ActionListener {
                 FileReader fr = new FileReader(file);
                 BufferedReader br = new BufferedReader(fr);
                 textArea.setText("");
+                StringBuilder sb = new StringBuilder();
                 String line;
                 while ((line = br.readLine()) != null) {
-                    textArea.append(line + '\n');
+                    sb.append(line).append("\n");
                 }
+                textArea.setText(sb.toString());
                 br.close();
                 textArea.setEnabled(true);
                 jForm.setTitle("Текстовый редактор - " + file.getName());

@@ -2,7 +2,7 @@ package components;
 
 import javax.swing.*;
 
-public class StatTextArea extends JTextArea {
+public class StatTextArea extends JTextPane {
     private final String description;
 
     public String getDescription() {
@@ -10,7 +10,7 @@ public class StatTextArea extends JTextArea {
     }
 
     public StatTextArea(String text, String description) {
-        super(text); //вызовы супер конструктор
+        super(); //вызовы супер конструктор
         this.description = description; //продолжи делать что-то ещё
     }
 }

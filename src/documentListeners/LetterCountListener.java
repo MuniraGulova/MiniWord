@@ -7,10 +7,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class LetterCountListener implements DocumentListener {
-    private final JTextArea sourceTxtArea;
-    private final JTextArea outputTxtArea;
+    private final JTextPane sourceTxtArea;
+    private final JTextPane outputTxtArea;
 
-    public LetterCountListener(JTextArea sourceTxtArea, JTextArea outputTxtArea) {
+    public LetterCountListener(JTextPane sourceTxtArea, JTextPane outputTxtArea) {
         this.sourceTxtArea = sourceTxtArea;
         this.outputTxtArea = outputTxtArea;
     }
