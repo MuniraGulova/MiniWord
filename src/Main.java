@@ -105,7 +105,7 @@ public class Main {
         Underline.addActionListener(new ParameterListeners(textArea, "Underline", null));
         Size.addActionListener(new ParameterListeners(textArea, "Size", 14));
         Font.addActionListener(new ParameterListeners(textArea, "Font", "Arial"));
-        Font.addActionListener(new ParameterListeners(textArea, "Color", "Black"));
+        Color.addActionListener(new ParameterListeners(textArea, "Color", "Black"));
 
         //////
         JMenu menuEdit = new JMenu("Правка");
