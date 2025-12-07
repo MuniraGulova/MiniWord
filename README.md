@@ -49,7 +49,7 @@ To compile and run the application using JDK:
 ```
 javac Main.java
 java Main
-``
+```
 The project can also be opened in any IDE supporting Java.
 
 5. Notes
