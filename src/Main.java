@@ -98,12 +98,14 @@ public class Main {
         JMenuItem Underline = new JMenuItem("Подчеркивание");
         JMenuItem Size = new JMenuItem("Размер");
         JMenuItem Font = new JMenuItem("Тип шрифта");
+        JMenuItem Color = new JMenuItem("Цвет шрифта");
 
         Bold.addActionListener(new ParameterListeners(textArea, "Bold", null));
         Italic.addActionListener(new ParameterListeners(textArea, "Italic", null));
         Underline.addActionListener(new ParameterListeners(textArea, "Underline", null));
         Size.addActionListener(new ParameterListeners(textArea, "Size", 14));
         Font.addActionListener(new ParameterListeners(textArea, "Font", "Arial"));
+        Font.addActionListener(new ParameterListeners(textArea, "Color", "Black"));
 
         //////
         JMenu menuEdit = new JMenu("Правка");

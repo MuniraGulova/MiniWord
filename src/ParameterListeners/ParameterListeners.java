@@ -63,6 +63,10 @@ public class ParameterListeners implements ActionListener {
                 String selectedFont = (String) JOptionPane.showInputDialog(textPane, "Выберите шрифт ^_^: ", "Тип шрифта", JOptionPane.QUESTION_MESSAGE, null, fonts, fonts[0]);
                 StyleConstants.setFontFamily(attrs, selectedFont);
                 break;
+            case "Color":
+                Color color = JColorChooser.showDialog(textPane,"Choose text color", Color.BLACK);
+                StyleConstants.setForeground(attrs, color);
+                break;
         }
         applyStyle(attrs);
     }
