@@ -54,3 +54,6 @@ The project can also be opened in any IDE supporting Java.
 
 5. Notes
 The implementation corresponds to the requirements of an academic assignment and focuses on correctness and clarity of fundamental text editing and processing functions.
+
+<img width="1654" height="1586" alt="image" src="https://github.com/user-attachments/assets/7e4335a7-eee4-4e97-98de-01652a380d27" />
+
