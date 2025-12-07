@@ -95,11 +95,37 @@ public class Main {
         JMenu menuFront = new JMenu("Формат");
         JMenuItem Bold = new JMenuItem("Жирный");
         JMenuItem Italic = new JMenuItem("Курсивный");
-        JMenuItem Strikethrough = new JMenuItem("Подчеркивание");
+        JMenuItem Underline = new JMenuItem("Подчеркивание");
         JMenuItem Size = new JMenuItem("Размер");
-        JMenuItem Front = new JMenuItem("Тип шрифта");
+        JMenuItem Font = new JMenuItem("Тип шрифта");
 
-        Bold.addActionListener(new ParameterListeners(textArea));
+        Bold.addActionListener(new ParameterListeners(textArea, "Bold", null));
+        Italic.addActionListener(new ParameterListeners(textArea, "Italic", null));
+        Underline.addActionListener(new ParameterListeners(textArea, "Underline", null));
+        Size.addActionListener(new ParameterListeners(textArea, "Size", 14));
+        Font.addActionListener(new ParameterListeners(textArea, "Font", "Arial"));
+
+        //////
+        JMenu menuEdit = new JMenu("Правка");
+        JMenuItem selectAll = new JMenuItem("Выделить все");
+        JMenuItem selectRange = new JMenuItem("Выделить диапазон ....");
+        JMenuItem cut = new JMenuItem("Вырезать");
+        JMenuItem copy = new JMenuItem("Копировать");
+        JMenuItem paste = new JMenuItem("Вставить");
+
+        menuEdit.add(selectAll);
+        menuEdit.add(selectRange);
+        menuEdit.add(cut);
+        menuEdit.add(copy);
+        menuEdit.add(paste);
+
+        /////
+        selectAll.addActionListener(e -> textArea.selectAll());
+        copy.addActionListener(e -> textArea.copy());
+        cut.addActionListener(e -> textArea.cut());
+        paste.addActionListener(e -> textArea.paste());
+
+        /////
 
         menuFile.add(openFile);
         menuFile.add(newFile);
@@ -108,12 +134,13 @@ public class Main {
         menuBar.add(menuFile);
         menuFront.add(Bold);
         menuFront.add(Italic);
-        menuFront.add(Strikethrough);
+        menuFront.add(Underline);
         menuRedactor.add(menuFront);
         menuRedactor.add(Size);
-        menuRedactor.add(Front);
+        menuRedactor.add(Font);
 
         menuBar.add(menuRedactor);
+        menuBar.add(menuEdit);
         jForm.setJMenuBar(menuBar);
 
         JToolBar toolBar = new JToolBar();
